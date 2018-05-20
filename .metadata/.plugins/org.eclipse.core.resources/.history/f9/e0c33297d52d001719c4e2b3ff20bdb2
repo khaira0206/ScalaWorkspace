@@ -1,0 +1,145 @@
+
+class Node(data1 : Object){
+  
+  var data: Object = data1;
+  var next : Node = null;
+  
+   def getNext() : Node ={
+    return next;
+  }
+  def setNext(next : Node){
+    this.next = next;
+  }
+  
+  
+}
+
+class Link_list extends Iterable[Node] {
+  
+  var head1 : Node = null;
+  var counter : Int = 0;
+  var fistNode : Node = null
+  var lastNode : Node = null
+  var curser : Int = 0;  
+  
+def reverse(node :Node) :Node = {
+        var prev : Node = null;
+        var current : Node = node;
+        var next :Node = null;
+        while (current != null) {
+            next = current.next;
+            current.next = prev;
+            prev = current;
+            current = next;
+        }
+       var node1 : Node = prev;
+        return node1;
+    }
+  
+  def add(data : Object){
+   var tempNode : Node = new Node(data);
+    if(head1 == null){head1 = tempNode; 
+      fistNode = tempNode
+      lastNode = tempNode}
+    else{tempNode.setNext(head1)
+    head1 = tempNode 
+    lastNode = tempNode
+    }
+    increamentCounter();
+    
+  }
+   def increamentCounter(){counter += 1;}
+  
+   def isEmpty1() : Boolean={ 
+     if(counter == 0){ 
+       return true
+       }
+     return false
+     }
+   
+    def show(node: Node){
+    var current : Node = node;
+    if(current != null){
+       
+    while(current!= null){
+     
+      print(current.data);
+       current = current.getNext();
+    }
+  }
+  }
+    
+    
+    def  iterator() : Iterator[Node] ={
+      var  list: Link_list = this
+      list.head1 = list.reverse(list.head1)
+      fistNode1 = list.head1
+      return new Iterator[Node](){
+         var fistNode1 : Node = list.head1
+        var currentNode : Node = null;
+         
+         def hasNext() : Boolean = {
+           if(list.isEmpty1()){
+             return false
+           }
+           else if(currentNode == null)
+           {
+             return true
+           }
+           else if(currentNode == list.lastNode){
+             return false
+           }
+           return true
+         }
+         
+         def next() : Node ={
+           try{       
+               if (list.isEmpty1()){
+                throw new NoSuchElementException();
+            } else if (currentNode == null){
+                this.currentNode = fistNode1;
+                return currentNode;
+            } else if (currentNode.next == null) {
+                throw new NoSuchElementException();
+            }
+           }
+           catch{
+             case e: Exception => e.printStackTrace()
+           }
+            this.currentNode = currentNode.next;
+            return currentNode;
+           
+         }
+      };
+    }
+    
+   
+    def size1() : Int ={
+      return counter;
+    }
+    
+    
+  
+}
+/*
+object mylist {
+  
+  def main(arg : Array[String]){
+    var list = new Link_list();
+    
+    list.add(1.asInstanceOf[Object]);
+    list.add(2.asInstanceOf[Object]);
+    list.add(3.asInstanceOf[Object]);
+    list.add(4.asInstanceOf[Object]);
+    
+   // list.show(list.head1)
+    var it : Iterator[Node] = list.iterator()
+    while(it.hasNext){
+      
+      println(it.next().data)
+      
+    }
+    
+  }
+ 
+} */
